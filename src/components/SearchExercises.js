@@ -1,8 +1,9 @@
 import React from 'react'
-import { Box, Stack, TextField, Typography, Button, lighten } from "@mui/material"
-import { useState, useEffect, createContext} from "react"
+import { Box, Stack, TextField, Typography, Button} from "@mui/material"
+import { useState, useEffect, useContext} from "react"
 import axios from "axios";
 import HorizontalScrollbar from './HorizontalScrollbar';
+import { bodyContext } from '../pages/Home';
 
 const fetchData = async (inputUrl)=> {
     const options = {
@@ -23,7 +24,10 @@ const fetchData = async (inputUrl)=> {
 }
 
 
-function SearchExercises({setExercise}) {
+function SearchExercises() {
+
+    const {setExercise} = useContext(bodyContext)
+
     const [search, setSearch] = useState("")
     
     const [bodyParts, setBodyParts] = useState([])
@@ -32,7 +36,7 @@ function SearchExercises({setExercise}) {
     useEffect(()=>{
             const fetchBodyParts = async () =>{ 
             const bodyParts = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList')
-            setBodyParts(["all", bodyParts])
+            setBodyParts(["all", ...bodyParts])
             }
             fetchBodyParts()
     },[])
@@ -81,3 +85,4 @@ function SearchExercises({setExercise}) {
 }
 
 export default SearchExercises
+export {fetchData}

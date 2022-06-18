@@ -10,11 +10,12 @@ export const bodyContext = createContext()
 function Home() {
   const [exercise, setExercise] = useState([])
   const [bodyPart, setBodyPart] = useState("all")
+  console.log(bodyPart)
   return (
     <div>
       <Box>
         <HeroBanner />
-        <bodyContext.Provider value={{ setExercise, bodyPart, setBodyPart }}>
+        <bodyContext.Provider value={{ setExercise, bodyPart, setBodyPart, exercise }}>
           <SearchExercises />
           <Exercises />
         </bodyContext.Provider>
