@@ -1,10 +1,13 @@
 import React, { useContext } from 'react'
-import { Stack, Typography } from "@mui/material"
-import Icon from "../assets/icons/gym.png"
+import { requirePropFactory, Stack, Typography } from "@mui/material"
+
+
+
 import { bodyContext } from '../pages/Home'
 
 function BodyPart({ item }) {
     const { bodyPart, setBodyPart } = useContext(bodyContext)
+    // console.log(item)
     return (
         <Stack
             type="button"
@@ -17,7 +20,7 @@ function BodyPart({ item }) {
                 window.scrollTo({ top: 1300, left: 100, behavior: 'smooth' });
             }}
         >
-            <img src={Icon} alt="dumbell" style={{ width: "40px", height: "40px" }} />
+            <img src={require(`../../public/bodyImages/${item}.png`)} alt="dumbell" style={{ width: "40px", height: "40px" }} />
             <Typography fontSize="24px" fontWeight="bold" fontFamily="Alegreya" color="#3A1212" textTransform="capitalize"> {item}</Typography>
         </Stack>
     )
