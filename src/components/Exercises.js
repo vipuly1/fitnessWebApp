@@ -3,7 +3,7 @@ import { Pagination } from '@mui/material'
 import {Box, Stack, Typography} from '@mui/material'
 import { bodyContext } from '../pages/Home'
 import ExerciseCard from './ExerciseCard'
-import { fetchData } from './SearchExercises'
+import { fetchData } from '../utils/fetchData'
 
 
 function Exercises() {
@@ -23,10 +23,10 @@ function Exercises() {
       const fetchBodyPartExercises = async () =>{
         let bodyExercises
         if(bodyPart === "all"){
-          bodyExercises = await fetchData(`https://exercisedb.p.rapidapi.com/exercises`)
+          bodyExercises = await fetchData(`https://exercisedb.p.rapidapi.com/exercises`, "exerciseOptions")
         }
         else{
-          bodyExercises = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`)
+          bodyExercises = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}` , "exerciseOptions")
         }
         setExercise(bodyExercises)
       }

@@ -4,24 +4,7 @@ import { useState, useEffect, useContext} from "react"
 import axios from "axios";
 import HorizontalScrollbar from './HorizontalScrollbar';
 import { bodyContext } from '../pages/Home';
-
-const fetchData = async (inputUrl)=> {
-    const options = {
-        method: 'GET',
-        url: inputUrl,
-        headers: {
-            'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
-            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-        }
-    };
-    let fetchedData
-    await axios.request(options).then((res) => {
-        fetchedData = res.data
-    }).catch(err => {
-        console.log(err)
-    })
-    return fetchedData
-}
+import {fetchData} from "../utils/fetchData"
 
 
 function SearchExercises() {
@@ -35,7 +18,7 @@ function SearchExercises() {
     
     useEffect(()=>{
             const fetchBodyParts = async () =>{ 
-            const bodyParts = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList')
+            const bodyParts = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', "exerciseOptions")
             setBodyParts(["all", ...bodyParts])
             }
             fetchBodyParts()
@@ -44,7 +27,7 @@ function SearchExercises() {
     const handleClick = async () => {
         if (search) {
 
-            let exerciseData = await fetchData('https://exercisedb.p.rapidapi.com/exercises')
+            let exerciseData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', "exerciseOptions")
 
             const searchedExercise = exerciseData.filter((item) => {
                 return (item.name.toLowerCase().includes(search)
@@ -78,11 +61,10 @@ function SearchExercises() {
                 <Button className="search-btn" sx={{ backgroundColor: "#FF2625", color: "#ffff", textTransform: "none", width: { lg: "175px", xs: "80px" }, fontSize: { lg: "20px", xs: "14px" }, height: "56px", position: "absolute", right: "0" }} onClick={handleClick}>Search</Button>
             </Box>
             <Box sx={{position:"relative", p: "20px", width: "100%"}}>
-                <HorizontalScrollbar data={bodyParts}/>
+                <HorizontalScrollbar data={bodyParts} isbodyPart />
             </Box>
         </Stack>
     )
 }
 
 export default SearchExercises
-export {fetchData}
